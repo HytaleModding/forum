@@ -1,5 +1,5 @@
 {
-    "name": "hytale-modding/theme",
+    "name": "hytalemodding/theme",
     "description": "Hytale Modding&#39;s forum theme.",
     "keywords": [
         "flarum"
@@ -7,18 +7,18 @@
     "type": "flarum-extension",
     "license": "MIT",
     "require": {
-        "flarum/core": "^2.0"
+        "flarum/core": "^1.8"
     },
     "authors": [
         {
             "name": "Ben Cressman",
-            "email": "cressmanbenjamin@gmail.com",
+            "email": "ben@hytalemodding.dev",
             "role": "Developer"
         }
     ],
     "autoload": {
         "psr-4": {
-            "HytaleModding\\Theme\\": "src/"
+            "Hytalemodding\\Theme\\": "src/"
         }
     },
     "extra": {
@@ -56,7 +56,7 @@
     "prefer-stable": true,
     "autoload-dev": {
         "psr-4": {
-            "HytaleModding\\Theme\\Tests\\": "tests/"
+            "Hytalemodding\\Theme\\Tests\\": "tests/"
         }
     },
     "scripts": {
@@ -73,8 +73,5 @@
         "test:unit": "Runs all unit tests.",
         "test:integration": "Runs all integration tests.",
         "test:setup": "Sets up a database for use with integration tests. Execute this only once."
-    },
-    "require-dev": {
-        "flarum/testing": "^2.0"
     }
 }

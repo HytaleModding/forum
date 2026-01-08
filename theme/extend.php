@@ -1,15 +1,15 @@
 <?php
 
 /*
- * This file is part of hytale-modding/theme.
+ * This file is part of hytalemodding/theme.
  *
- * Copyright (c) 2025 Ben Cressman.
+ * Copyright (c) 2026 Ben Cressman.
  *
  * For the full copyright and license information, please view the LICENSE.md
  * file that was distributed with this source code.
  */
 
-namespace HytaleModding\Theme;
+namespace Hytalemodding\Theme;
 
 use Flarum\Extend;
 

@@ -1,0 +1,900 @@
+// ==========================================================================
+// Hytale Modding Forum Theme
+// Dark mode with blue gradient accents
+// ==========================================================================
+
+// ---------------------------------
+// FONT IMPORTS
+// ---------------------------------
+
+@import url("https://fonts.googleapis.com/css2?family=Outfit:wght@300..700&display=swap");
+
+// ---------------------------------
+// FLARUM CONFIG OVERRIDES
+// ---------------------------------
+
+// Enable dark mode
+@config-dark-mode: true;
+
+// Primary accent - vibrant blue
+@config-primary-color: #3b82f6;
+
+// Secondary color - deep blue
+@config-secondary-color: #1e3a5f;
+
+// Don't use colored header - keep it minimal
+@config-colored-header: false;
+
+// ---------------------------------
+// COLOR PALETTE
+// ---------------------------------
+
+// Background colors - ultra dark
+@hm-background: #0a0a0f;        // near black with slight blue tint
+@hm-background-dark: #050508;   // true dark
+@hm-card: #12121a;              // card surfaces
+@hm-card-hover: #1a1a24;        // card hover state
+@hm-muted: #252530;             // muted elements
+
+// Foreground colors
+@hm-foreground: #f0f0f5;        // slightly cool white
+@hm-muted-foreground: #8888a0;  // muted text with blue undertone
+
+// Border
+@hm-border: rgba(100, 130, 255, 0.08);
+@hm-border-glow: rgba(59, 130, 246, 0.2);
+@hm-input-border: rgba(100, 130, 255, 0.15);
+
+// Blue gradient accents (cyan to blue only, no purple)
+@hm-accent-start: #06b6d4;      // cyan
+@hm-accent-mid: #3b82f6;        // blue
+@hm-accent-end: #2563eb;        // deeper blue
+@hm-primary: #3b82f6;           // primary blue
+
+// Gradient definitions (cyan to blue)
+@hm-gradient: linear-gradient(135deg, @hm-accent-start 0%, @hm-accent-mid 100%);
+@hm-gradient-subtle: linear-gradient(135deg, fade(@hm-accent-start, 15%) 0%, fade(@hm-accent-mid, 15%) 100%);
+@hm-gradient-border: linear-gradient(135deg, fade(@hm-accent-start, 30%) 0%, fade(@hm-accent-mid, 30%) 100%);
+
+// Glow effects
+@hm-glow-blue: 0 0 40px fade(@hm-accent-mid, 15%);
+@hm-glow-cyan: 0 0 30px fade(@hm-accent-start, 12%);
+
+// Destructive/error
+@hm-destructive: #f43f5e;
+
+// ---------------------------------
+// TYPOGRAPHY
+// ---------------------------------
+
+// Apply Outfit as the main font - clean, geometric, modern
+body {
+  font-family: "Outfit", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  background: @hm-background;
+  
+  // Subtle grid pattern overlay for depth
+  &::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: 
+      radial-gradient(circle at 25% 25%, fade(@hm-accent-mid, 3%) 0%, transparent 50%),
+      radial-gradient(circle at 75% 75%, fade(@hm-accent-end, 2%) 0%, transparent 50%);
+    pointer-events: none;
+    z-index: -1;
+  }
+}
+
+// ---------------------------------
+// LAYOUT
+// ---------------------------------
+
+// Border radius matching docs (0.625rem = 10px)
+@border-radius: 10px;
+
+// ---------------------------------
+// ROOT CSS VARIABLE OVERRIDES
+// ---------------------------------
+
+:root {
+  // Background colors
+  --body-bg: @hm-background;
+  --body-bg-shaded: @hm-background-dark;
+  --body-bg-light: @hm-card;
+  --body-bg-faded: fade(@hm-background, 95%);
+
+  // Text colors
+  --text-color: @hm-foreground;
+  --heading-color: @hm-foreground;
+  --link-color: @hm-accent-start;
+
+  // Muted colors
+  --muted-color: @hm-muted-foreground;
+  --muted-color-light: lighten(@hm-muted-foreground, 15%);
+  --muted-more-color: darken(@hm-muted-foreground, 20%);
+
+  // Control/input colors
+  --control-bg: @hm-card;
+  --control-bg-light: @hm-card-hover;
+  --control-bg-shaded: @hm-background-dark;
+  --control-color: @hm-muted-foreground;
+
+  // Header
+  --header-bg: fade(@hm-background, 80%);
+  --header-color: @hm-foreground;
+  --header-control-bg: @hm-card;
+  --header-control-color: @hm-muted-foreground;
+
+  // Components
+  --hero-bg: @hm-card;
+  --hero-color: @hm-muted-foreground;
+  --usercard-bg: @hm-card;
+  --avatar-bg: @hm-muted;
+
+  // Discussion list
+  --discussion-title-color: @hm-foreground;
+  --discussion-list-item-bg-hover: @hm-card-hover;
+
+  // Overlay
+  --overlay-bg: fade(@hm-background-dark, 92%);
+
+  // Code blocks
+  --code-bg: @hm-background-dark;
+  --code-color: @hm-accent-start;
+
+  // Shadow
+  --shadow-color: rgba(0, 0, 0, 0.7);
+
+  // Border radius
+  --border-radius: @border-radius;
+
+  // Error colors
+  --error-color: @hm-destructive;
+  --control-danger-bg: fade(@hm-destructive, 15%);
+  --control-danger-color: @hm-destructive;
+
+  // Alerts
+  --alert-error-bg: fade(@hm-destructive, 90%);
+  --alert-error-color: #fff;
+  --alert-success-bg: #10b981;
+  --alert-success-color: #fff;
+}
+
+// ---------------------------------
+// COMPONENT REFINEMENTS
+// ---------------------------------
+
+// Header styling - glassmorphism effect
+.Header {
+  background: fade(@hm-background, 85%);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid @hm-border;
+  
+  .Header-title {
+    background: @hm-gradient;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    font-weight: 700;
+  }
+}
+
+// Hero section with gradient accent
+.Hero {
+  background: @hm-card;
+  border-bottom: 1px solid @hm-border;
+  position: relative;
+  overflow: hidden;
+  
+  // Subtle gradient glow
+  &::before {
+    content: "";
+    position: absolute;
+    top: -50%;
+    left: -25%;
+    width: 150%;
+    height: 200%;
+    background: radial-gradient(ellipse at center, fade(@hm-accent-mid, 8%) 0%, transparent 60%);
+    pointer-events: none;
+  }
+}
+
+.Hero-title {
+  color: @hm-foreground;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.Hero-subtitle {
+  color: @hm-muted-foreground;
+}
+
+// Discussion Hero title with gradient
+.DiscussionHero-title {
+  color: @hm-foreground;
+  font-weight: 600;
+}
+
+// Discussion list items (styled like TagTile)
+.DiscussionListItem {
+  background: @hm-card;
+  border: 1px solid @hm-border;
+  border-radius: @card-radius;
+  box-shadow: @card-shadow;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  margin-bottom: 12px;
+  position: relative;
+  overflow: hidden;
+
+  // Gradient border on hover
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 1px;
+    background: @hm-gradient;
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+  }
+  
+  // Subtle gradient glow effect on top
+  &::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 80px;
+    background: linear-gradient(180deg, fade(@hm-accent-mid, 5%) 0%, transparent 100%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+  }
+
+  &:hover {
+    box-shadow: @card-shadow-hover;
+    border-color: transparent;
+    
+    &::before {
+      opacity: 1;
+    }
+    
+    &::after {
+      opacity: 1;
+    }
+  }
+  
+  .DiscussionListItem-title {
+    color: @hm-foreground;
+    font-weight: 500;
+  }
+  
+  .DiscussionListItem-content {
+    position: relative;
+    z-index: 1;
+  }
+}
+
+// Cards and dropdowns
+.Dropdown-menu {
+  background: @hm-card;
+  border: 1px solid @hm-border;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5), @hm-glow-blue;
+  backdrop-filter: blur(12px);
+  
+  .Dropdown-item {
+    transition: all 0.15s ease;
+    
+    &:hover {
+      background: fade(@hm-accent-mid, 12%);
+    }
+    
+    &.active {
+      background: fade(@hm-accent-mid, 20%);
+      color: @hm-accent-start;
+    }
+  }
+}
+
+// Modals with gradient border
+.Modal {
+  background: @hm-card;
+  border: 1px solid @hm-border;
+  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.6), @hm-glow-blue;
+  position: relative;
+  
+  &::before {
+    content: "";
+    position: absolute;
+    inset: -1px;
+    border-radius: inherit;
+    padding: 1px;
+    background: @hm-gradient-border;
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+  }
+}
+
+// Form controls with focus glow
+.FormControl {
+  background: @hm-background-dark;
+  border: 1px solid @hm-input-border;
+  color: @hm-foreground;
+  padding: 10px 14px;
+  transition: all 0.2s ease;
+
+  &:focus {
+    background: @hm-background;
+    border-color: fade(@hm-accent-mid, 50%);
+    outline: none;
+    box-shadow: 0 0 0 3px fade(@hm-accent-mid, 15%);
+  }
+
+  &::placeholder {
+    color: @hm-muted-foreground;
+  }
+}
+
+// Select dropdowns
+.Select {
+  .FormControl {
+    padding: 10px 14px;
+  }
+}
+
+// Selected option in dropdowns
+.Select-option {
+  padding: 10px 14px;
+  transition: all 0.15s ease;
+
+  &.active,
+  &[aria-selected="true"] {
+    background: fade(@hm-accent-mid, 20%);
+    color: @hm-accent-start;
+  }
+}
+
+// Buttons - default style
+.Button {
+  border-radius: @border-radius;
+  transition: all 0.2s ease;
+  font-weight: 500;
+}
+
+// Primary button with gradient
+.Button--primary {
+  background: @hm-gradient;
+  color: #fff;
+  border: none;
+  box-shadow: 0 4px 15px fade(@hm-accent-mid, 30%);
+  font-weight: 600;
+
+  &:hover {
+    box-shadow: 0 6px 20px fade(@hm-accent-mid, 40%);
+  }
+}
+
+// Icon buttons
+.Button--icon {
+  &:hover {
+    background: fade(@hm-accent-mid, 15%);
+    color: @hm-accent-start;
+  }
+}
+
+// Post content
+.Post-body {
+  color: @hm-foreground;
+  line-height: 1.7;
+  
+  // Code blocks with accent
+  code {
+    background: @hm-background-dark;
+    color: @hm-accent-start;
+    padding: 2px 6px;
+    border-radius: 4px;
+  }
+  
+  pre {
+    background: @hm-background-dark;
+    border: 1px solid @hm-border;
+    border-left: 3px solid @hm-accent-mid;
+    
+    code {
+      color: @hm-foreground;
+      background: transparent;
+      padding: 0;
+    }
+  }
+  
+  // Links with gradient underline
+  a {
+    color: @hm-accent-start;
+    text-decoration: none;
+    background: linear-gradient(90deg, @hm-accent-start, @hm-accent-mid);
+    background-size: 0% 2px;
+    background-position: 0 100%;
+    background-repeat: no-repeat;
+    transition: background-size 0.25s ease;
+    
+    &:hover {
+      background-size: 100% 2px;
+    }
+  }
+}
+
+// Composer with glow effect
+.Composer {
+  background: @hm-card;
+  border-top: 1px solid @hm-border;
+  border-radius: @border-radius @border-radius 0 0;
+  box-shadow: 0 -4px 32px fade(@hm-background-dark, 80%);
+  overflow: visible;
+
+  &.active:not(.fullScreen) {
+    box-shadow: 0 -8px 40px rgba(0, 0, 0, 0.5), 0 0 0 1px fade(@hm-accent-mid, 15%);
+    min-height: 300px; // Ensure enough height for editor + controls
+  }
+  
+  .Composer-content {
+    overflow: visible;
+  }
+}
+
+// TextEditor textarea styling
+.TextEditor {
+  position: relative;
+  padding-bottom: 50px; // Reserve space for controls
+  
+  .TextEditor-editor {
+    background: @hm-background-dark;
+    border: 1px solid @hm-input-border;
+    border-radius: @border-radius;
+    padding: 14px 16px;
+    color: @hm-foreground;
+    min-height: 120px;
+    transition: all 0.2s ease;
+
+    &:focus {
+      background: @hm-background;
+      border-color: fade(@hm-accent-mid, 40%);
+      box-shadow: 0 0 0 3px fade(@hm-accent-mid, 12%);
+    }
+
+    &::placeholder {
+      color: @hm-muted-foreground;
+    }
+  }
+  
+  .TextEditor-controls {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 10px 20px;
+  }
+}
+
+// Composer-specific textarea adjustments
+.ComposerBody-editor {
+  .TextEditor {
+    .TextEditor-editor {
+      background: @hm-background-dark;
+      border: 1px solid @hm-input-border;
+      border-radius: @border-radius;
+      padding: 14px 16px;
+
+      &:focus {
+        background: @hm-background;
+        border-color: fade(@hm-accent-mid, 40%);
+        box-shadow: 0 0 0 3px fade(@hm-accent-mid, 12%);
+      }
+    }
+  }
+}
+
+// Title input in new discussion composer
+.ComposerBody-header h3 input {
+  background: @hm-background-dark !important;
+  border: 1px solid @hm-input-border !important;
+  border-radius: @border-radius !important;
+  padding: 10px 14px !important;
+  color: @hm-foreground;
+  transition: all 0.2s ease;
+
+  &:focus {
+    background: @hm-background !important;
+    border-color: fade(@hm-accent-mid, 40%) !important;
+    box-shadow: 0 0 0 3px fade(@hm-accent-mid, 12%);
+  }
+}
+
+// Side navigation
+.sideNav {
+  .item-title {
+    color: @hm-foreground;
+    font-weight: 500;
+  }
+
+  .Dropdown-toggle {
+    color: @hm-muted-foreground;
+    transition: color 0.15s ease;
+    
+    &:hover {
+      color: @hm-accent-start;
+    }
+  }
+  
+  .item-new {
+    .Button--primary;
+    
+    .Button-label {
+      color: #fff;
+    }
+  }
+}
+
+// Tags with gradient accent
+.TagLabel {
+  border-radius: @border-radius;
+  font-weight: 500;
+  transition: all 0.15s ease;
+  
+  &:hover {
+    box-shadow: 0 2px 8px fade(@hm-accent-mid, 20%);
+  }
+}
+
+// ---------------------------------
+// TAG TILES (Modern card-style with gradient accents)
+// ---------------------------------
+
+// Card border radius
+@card-radius: 14px;
+
+// Card shadows
+@card-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+@card-shadow-hover: 0 8px 40px rgba(0, 0, 0, 0.5), @hm-glow-blue;
+
+.TagTiles {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+
+  > li {
+    float: none !important;
+    width: calc(33.333% - 14px) !important;
+    height: auto;
+    min-height: 220px;
+    border-radius: @card-radius !important;
+    overflow: hidden;
+
+    @media @tablet {
+      width: calc(50% - 10px) !important;
+    }
+
+    @media @phone {
+      width: 100% !important;
+    }
+  }
+}
+
+.TagTile {
+  background: @hm-card;
+  border: 1px solid @hm-border;
+  border-radius: @card-radius;
+  box-shadow: @card-shadow;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  height: 100%;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+
+  // Gradient border on hover
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 1px;
+    background: @hm-gradient;
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+  }
+  
+  // Subtle gradient glow effect on top
+  &::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 120px;
+    background: linear-gradient(180deg, fade(@hm-accent-mid, 5%) 0%, transparent 100%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+  }
+
+  &:hover {
+    box-shadow: @card-shadow-hover;
+    border-color: transparent;
+    
+    &::before {
+      opacity: 1;
+    }
+    
+    &::after {
+      opacity: 1;
+    }
+  }
+
+  &:not(.colored) {
+    --tag-bg: @hm-card;
+  }
+
+  &, a {
+    color: @hm-foreground;
+  }
+
+  &.colored {
+    border-color: fade(@hm-accent-mid, 20%);
+  }
+}
+
+.TagTile-info {
+  padding: 28px;
+  background: transparent;
+  position: relative;
+  z-index: 1;
+  flex: 1; // Grow to fill space, pushing footer to bottom
+
+  .icon {
+    font-size: 32px;
+    margin-bottom: 12px;
+    float: none;
+    display: inline-block;
+    background: @hm-gradient;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  // Custom scrollbar
+  &::-webkit-scrollbar {
+    width: 5px;
+    background: transparent;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: transparent !important;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: fade(@hm-accent-mid, 30%);
+    border-radius: 3px;
+  }
+
+  &::-webkit-scrollbar-thumb:hover {
+    background: fade(@hm-accent-mid, 50%);
+  }
+}
+
+.TagTile-name {
+  font-size: 20px;
+  font-weight: 600;
+  margin: 0 0 10px;
+  line-height: 1.3;
+  color: @hm-foreground;
+  letter-spacing: -0.01em;
+}
+
+.TagTile-description {
+  font-size: 14px;
+  line-height: 1.6;
+  margin: 0 0 14px;
+  color: @hm-muted-foreground;
+}
+
+.TagTile-children {
+  font-size: 13px;
+  font-weight: 500;
+
+  a {
+    color: @hm-muted-foreground;
+    margin-right: 14px;
+    transition: all 0.15s ease;
+
+    &:hover {
+      color: @hm-accent-start;
+    }
+  }
+}
+
+.TagTile-lastPostedDiscussion {
+  height: 52px;
+  padding: 14px 28px;
+  margin-bottom: 2px;
+  margin-top: auto; // Push to bottom of flex container
+  border-top: 1px solid @hm-border;
+  background: @hm-card;
+  font-size: 13px;
+  color: @hm-foreground;
+  position: relative;
+  z-index: 1;
+  flex-shrink: 0; // Don't shrink
+
+  time {
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: @hm-accent-start;
+  }
+
+  &:hover .TagTile-lastPostedDiscussion-title {
+    color: @hm-accent-start;
+  }
+}
+
+.TagTile-lastPostedDiscussion-title {
+  color: @hm-foreground;
+  transition: color 0.15s ease;
+}
+
+// User badges with gradient
+.Badge {
+  border-radius: @border-radius;
+  font-weight: 600;
+  
+  &--primary {
+    background: @hm-gradient;
+    color: #fff;
+  }
+}
+
+// Alerts
+.Alert {
+  border-radius: @border-radius;
+  backdrop-filter: blur(8px);
+  
+  &--success {
+    background: fade(#10b981, 90%);
+    border: 1px solid fade(#10b981, 30%);
+  }
+  
+  &--error {
+    background: fade(@hm-destructive, 90%);
+    border: 1px solid fade(@hm-destructive, 30%);
+  }
+}
+
+// Notification badges
+.NotificationList-item {
+  transition: all 0.15s ease;
+  
+  &:hover {
+    background: @hm-card-hover;
+  }
+  
+  &.unread {
+    border-left: 3px solid @hm-accent-mid;
+    background: fade(@hm-accent-mid, 8%);
+  }
+}
+
+// Loading spinner with gradient
+.LoadingIndicator-loading {
+  .LoadingIndicator-ring {
+    border-color: fade(@hm-accent-mid, 20%);
+    border-top-color: @hm-accent-start;
+  }
+}
+
+// Avatar ring on hover
+.Avatar {
+  transition: all 0.2s ease;
+  
+  &:hover {
+    box-shadow: 0 0 0 3px fade(@hm-accent-mid, 30%);
+  }
+}
+
+// Post stream items
+.PostStream-item {
+  .Post {
+    background: @hm-card;
+    border: 1px solid @hm-border;
+    border-radius: @border-radius;
+    transition: all 0.2s ease;
+    
+    &:hover {
+      border-color: fade(@hm-accent-mid, 15%);
+    }
+  }
+}
+
+// Scrollbar styling - sleek and minimal
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: @hm-background-dark;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, @hm-muted 0%, darken(@hm-muted, 5%) 100%);
+  border-radius: 5px;
+  border: 2px solid @hm-background-dark;
+
+  &:hover {
+    background: linear-gradient(180deg, fade(@hm-accent-start, 50%) 0%, fade(@hm-accent-mid, 40%) 100%);
+  }
+}
+
+// Selection color
+::selection {
+  background: fade(@hm-accent-mid, 40%);
+  color: #fff;
+}
+
+// Focus ring - accessible and on-brand
+*:focus-visible {
+  outline: 2px solid @hm-accent-mid;
+  outline-offset: 2px;
+}
+
+// Tooltips
+.Tooltip {
+  background: @hm-card;
+  border: 1px solid @hm-border;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+  color: @hm-foreground;
+}
+
+// User card popup
+.UserCard {
+  background: @hm-card;
+  border: 1px solid @hm-border;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.5), @hm-glow-blue;
+  
+  .UserCard-profile {
+    background: @hm-gradient-subtle;
+  }
+}
+
+// Search results
+.Search-results {
+  background: @hm-card;
+  border: 1px solid @hm-border;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.5);
+  
+  .SearchResult {
+    transition: all 0.15s ease;
+    
+    &:hover {
+      background: @hm-card-hover;
+    }
+  }
+}
