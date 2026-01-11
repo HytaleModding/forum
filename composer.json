@@ -4,7 +4,7 @@
     "keywords": [
         "flarum"
     ],
-    "type": "theme",
+    "type": "flarum-extension",
     "license": "MIT",
     "require": {
         "flarum/core": "^1.8"
@@ -28,7 +28,7 @@
     },
     "extra": {
         "flarum-extension": {
-            "title": "HytaleModding Theme",
+            "title": "Theme",
             "category": "theme",
             "icon": {
                 "image": "logo.png"
