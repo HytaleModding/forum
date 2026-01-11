@@ -4,7 +4,7 @@
     "keywords": [
         "flarum"
     ],
-    "type": "flarum-extension",
+    "type": "theme",
     "license": "MIT",
     "require": {
         "flarum/core": "^1.8"
